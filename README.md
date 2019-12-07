@@ -3,6 +3,6 @@
 
 # List of projects:
 
-- Machine Learning in Production: :movie_camera: Deploy a Sentiment Analysis Model
+- Machine Learning in Production: Deploy a Sentiment Analysis Model for movies reviews :movie_camera:  
  
 

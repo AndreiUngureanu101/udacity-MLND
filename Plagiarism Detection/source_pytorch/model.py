@@ -1,0 +1,124 @@
+# torch imports
+import torch.nn.functional as F
+import torch.nn as nn
+
+
+## TODO: Complete this classifier
+class BinaryClassifier(nn.Module):
+    """
+    Define a neural network that performs binary classification.
+    The network should accept your number of features as input, and produce 
+    a single sigmoid value, that can be rounded to a label: 0 or 1, as output.
+    
+    Notes on training:
+    To train a binary classifier in PyTorch, use BCELoss.
+    BCELoss is binary cross entropy loss, documentation: https://pytorch.org/docs/stable/nn.html#torch.nn.BCELoss
+    """
+
+    ## TODO: Define the init function, the input params are required (for loading code in train.py to work)
+    def __init__(self, input_features, hidden_dim, output_dim):
+        """
+        Initialize the model by setting up linear layers.
+        Use the input parameters to help define the layers of your model.
+        :param input_features: the number of input features in your training/test data
+        :param hidden_dim: helps define the number of nodes in the hidden layer(s)
+        :param output_dim: the number of outputs you want to produce
+        """
+        super(BinaryClassifier, self).__init__()
+
+        # define any initial layers, here
+        self.l1 = nn.Linear(input_features, hidden_dim)
+        self.l2 = nn.Linear(hidden_dim, hidden_dim)
+        self.l3 = nn.Linear(hidden_dim, hidden_dim)
+        self.l4 = nn.Linear(hidden_dim, output_dim)
+        
+        self.d1 = nn.Dropout(p=0.2)
+        self.d2 = nn.Dropout(p=0.2)
+        self.d3 = nn.Dropout(p=0.2)
+        
+        self.out = nn.Sigmoid()
+        
+    
+    ## TODO: Define the feedforward behavior of the network
+    def forward(self, x):
+        """
+        Perform a forward pass of our model on input features, x.
+        :param x: A batch of input features of size (batch_size, input_features)
+        :return: A single, sigmoid-activated value as output
+        """
+        
+        # define the feedforward behavior
+        
+        x = self.l1(x)
+        x = F.relu(x)
+        x = self.d1(x)
+        x = self.l2(x)
+        x = F.relu(x)
+        x = self.d2(x)
+        x = self.l3(x)
+        x = self.d3(x)
+        x = self.l4(x)
+        x = self.out(x)
+        
+        return x
+    
+    
+## TODO: Complete this classifier
+class MulticlassClassifier(nn.Module):
+    """
+    Define a neural network that performs multiclass classification.
+    The network should accept your number of features as input, and produce 
+    a class value
+    
+    Notes on training:
+    To train a binary classifier in PyTorch, use BCELoss.
+    BCELoss is binary cross entropy loss, documentation: https://pytorch.org/docs/stable/nn.html#torch.nn.BCELoss
+    """
+
+    ## TODO: Define the init function, the input params are required (for loading code in train.py to work)
+    def __init__(self, input_features, hidden_dim, output_dim):
+        """
+        Initialize the model by setting up linear layers.
+        Use the input parameters to help define the layers of your model.
+        :param input_features: the number of input features in your training/test data
+        :param hidden_dim: helps define the number of nodes in the hidden layer(s)
+        :param output_dim: the number of outputs you want to produce
+        """
+        super(MulticlassClassifier, self).__init__()
+
+        # define any initial layers, here
+        self.l1 = nn.Linear(input_features, hidden_dim)
+        self.l2 = nn.Linear(hidden_dim, hidden_dim)
+        self.l3 = nn.Linear(hidden_dim, hidden_dim)
+        self.l4 = nn.Linear(hidden_dim, output_dim)
+        
+        self.d1 = nn.Dropout(p=0.2)
+        self.d2 = nn.Dropout(p=0.2)
+        self.d3 = nn.Dropout(p=0.2)
+        
+        self.out = nn.Softmax()
+        
+    
+    ## TODO: Define the feedforward behavior of the network
+    def forward(self, x):
+        """
+        Perform a forward pass of our model on input features, x.
+        :param x: A batch of input features of size (batch_size, input_features)
+        :return: Multiple soft-max values as output
+        """
+        
+        # define the feedforward behavior
+        
+        x = self.l1(x)
+        x = F.relu(x)
+        x = self.d1(x)
+        x = self.l2(x)
+        x = F.relu(x)
+        x = self.d2(x)
+        x = self.l3(x)
+        x = self.d3(x)
+        x = self.l4(x)
+        x = self.out(x)
+        
+        return x
+    
